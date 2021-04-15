@@ -1,0 +1,10 @@
+F:\Programowanie\Programowanie w C#\Fotoszop\Fotoszop\bin\Debug\Fotoszop.exe.config
+F:\Programowanie\Programowanie w C#\Fotoszop\Fotoszop\bin\Debug\Fotoszop.exe
+F:\Programowanie\Programowanie w C#\Fotoszop\Fotoszop\bin\Debug\Fotoszop.pdb
+F:\Programowanie\Programowanie w C#\Fotoszop\Fotoszop\obj\Debug\Fotoszop.csprojAssemblyReference.cache
+F:\Programowanie\Programowanie w C#\Fotoszop\Fotoszop\obj\Debug\Fotoszop.Form1.resources
+F:\Programowanie\Programowanie w C#\Fotoszop\Fotoszop\obj\Debug\Fotoszop.Properties.Resources.resources
+F:\Programowanie\Programowanie w C#\Fotoszop\Fotoszop\obj\Debug\Fotoszop.csproj.GenerateResource.cache
+F:\Programowanie\Programowanie w C#\Fotoszop\Fotoszop\obj\Debug\Fotoszop.csproj.CoreCompileInputs.cache
+F:\Programowanie\Programowanie w C#\Fotoszop\Fotoszop\obj\Debug\Fotoszop.exe
+F:\Programowanie\Programowanie w C#\Fotoszop\Fotoszop\obj\Debug\Fotoszop.pdb
