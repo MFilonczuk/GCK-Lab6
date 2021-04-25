@@ -23,6 +23,13 @@ namespace Fotoszop
         Boolean czyJestZdjecie1 = false;
         Boolean czyJestZdjecie2 = false;
         Boolean czyJestZdjecie3 = false;
+        Boolean robHistogram = false;
+        int[] tabRed = new int[256];
+        int[] tabGreen = new int[256];
+        int[] tabBlue = new int[256];
+
+
+
 
 
         public Form1()
@@ -1244,68 +1251,7 @@ namespace Fotoszop
                 }
             }
         }
-
-        private void trackBarIncreaseContr_Scroll(object sender, EventArgs e)
-        {
-            if (!czyJestZdjecie1)
-            {
-                MessageBox.Show("Nie załadowałeś zdjęcia", "BŁĄD", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                Bitmap temp;
-                temp = (Bitmap)newBitmap1.Clone();
-                for (int x = 0; x < newBitmap1.Width; x++)
-                {
-                    for (int y = 0; y < newBitmap1.Height; y++)
-                    {
-                        temp.SetPixel(x, y, IncreaseContr(temp.GetPixel(x, y)));
-                        pictureBox1.Image = temp;
-                    }
-                }
-            }
-        }
-
-        private Color IncreaseContr(Color x)
-        {
-            int red = x.R;
-            int green = x.G;
-            int blue = x.B;
-            int newRed = 0;
-            if(red < 127)
-            {
-                newRed = ((127 - trackBarIncreaseContr.Value) / 127) * red;             
-            }
-            else if(red >= 127)
-            {
-                newRed = (127 - trackBarIncreaseContr.Value) / 127 * red + 2 * trackBarIncreaseContr.Value;
-            }            
-            int newGreen = 0;
-            if (green < 127)
-            {
-                newGreen = ((127 - trackBarIncreaseContr.Value) / 127) * green;              
-            }
-            else if (green >= 127)
-            {
-                newGreen = (127 - trackBarIncreaseContr.Value) / 127 * green + 2 * trackBarIncreaseContr.Value;
-            }
-            int newBlue = 0;
-            if (blue < 127)
-            {
-                newBlue = ((127 - trackBarIncreaseContr.Value)) / 127 * blue;
-            }
-            else if (blue >= 127)
-            {
-                newBlue = (127 - trackBarIncreaseContr.Value) / 127 * blue + 2 * trackBarIncreaseContr.Value;
-            }
-
-
-
-            Color newColor = Color.FromArgb((int)newRed, (int)newGreen, (int)newBlue);
-
-            return newColor;
-        }
-
+    
         private void trackBarGamma_Scroll(object sender, EventArgs e)
         {
 
@@ -1361,6 +1307,92 @@ namespace Fotoszop
 
             
         }
+
+        private void Histogram()
+        {
+            Array.Clear(tabRed, 0, tabRed.Length);
+            Array.Clear(tabGreen, 0, tabRed.Length);
+            Array.Clear(tabBlue, 0, tabRed.Length);
+
+            Color picColor;
+
+            Pen red = new Pen(Color.Red);
+
+            for (int x = 0; x < newBitmap1.Width; x++)
+            {
+                for (int y = 0; y < newBitmap1.Height; y++)
+                {
+                    picColor = newBitmap1.GetPixel(x, y);
+                    tabRed[picColor.R]++;
+                    tabGreen[picColor.G]++;
+                    tabBlue[picColor.B]++;                                                                
+                }
+            }         
+        }
+
+        private void panelRed_Paint(object sender, PaintEventArgs e)
+        {
+            if(czyJestZdjecie1)
+            {
+                Graphics g = e.Graphics;
+                int width = panelRed.Width;
+                int height = panelRed.Height;
+
+                for (int i = 0; i <= 255; i++)
+                {
+                    double r = tabRed[i];
+                    r = r / (newBitmap1.Width * newBitmap1.Height);
+                    r = r * 4000;
+                    g.DrawLine(new Pen(Color.Red), i, height, i, height - (int)r);
+                }
+            }                                    
+        }
+
+        private void buttonHistogram_Click(object sender, EventArgs e)
+        {
+            Histogram();
+            panelRed.Invalidate();
+            panelGreen.Invalidate();
+            panelBlue.Invalidate();
+        }
+
+        private void panelGreen_Paint(object sender, PaintEventArgs e)
+        {
+            if (czyJestZdjecie1)
+            {
+                Graphics g = e.Graphics;
+                int width = panelGreen.Width;
+                int height = panelGreen.Height;
+
+                for (int i = 0; i <= 255; i++)
+                {
+                    double gr = tabGreen[i];
+                    gr = gr / (newBitmap1.Width * newBitmap1.Height);
+                    gr = gr * 4000;
+                    g.DrawLine(new Pen(Color.Green), i, height, i, height - (int)gr);
+                }
+            }
+        }
+
+        private void panelBlue_Paint(object sender, PaintEventArgs e)
+        {
+            if (czyJestZdjecie1)
+            {
+                Graphics g = e.Graphics;
+                int width = panelGreen.Width;
+                int height = panelGreen.Height;
+
+                for (int i = 0; i <= 255; i++)
+                {
+                    double b = tabBlue[i];
+                    b = b/ (newBitmap1.Width * newBitmap1.Height);
+                    b = b * 4000;
+                    g.DrawLine(new Pen(Color.Blue), i, height, i, height - (int)b);
+                }
+            }
+        }
     }
+    
+
 }
 
