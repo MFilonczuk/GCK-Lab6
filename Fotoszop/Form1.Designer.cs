@@ -72,13 +72,16 @@ namespace Fotoszop
             this.label5 = new System.Windows.Forms.Label();
             this.labelOpacity = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.trackBarIncreaseContr = new System.Windows.Forms.TrackBar();
             this.trackBarGamma = new System.Windows.Forms.TrackBar();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.label9 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.labelGamma = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.panelRed = new System.Windows.Forms.Panel();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.panelGreen = new System.Windows.Forms.Panel();
+            this.panelBlue = new System.Windows.Forms.Panel();
+            this.buttonHistogram = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -91,9 +94,9 @@ namespace Fotoszop
             ((System.ComponentModel.ISupportInitialize)(this.trackBarOpacity)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarIncreaseContr)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGamma)).BeginInit();
             this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -604,24 +607,13 @@ namespace Fotoszop
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Tryby mieszania";
             // 
-            // trackBarIncreaseContr
-            // 
-            this.trackBarIncreaseContr.Location = new System.Drawing.Point(224, 19);
-            this.trackBarIncreaseContr.Maximum = 126;
-            this.trackBarIncreaseContr.Minimum = 1;
-            this.trackBarIncreaseContr.Name = "trackBarIncreaseContr";
-            this.trackBarIncreaseContr.Size = new System.Drawing.Size(203, 45);
-            this.trackBarIncreaseContr.TabIndex = 38;
-            this.trackBarIncreaseContr.Value = 1;
-            this.trackBarIncreaseContr.Scroll += new System.EventHandler(this.trackBarIncreaseContr_Scroll);
-            // 
             // trackBarGamma
             // 
             this.trackBarGamma.Location = new System.Drawing.Point(6, 19);
             this.trackBarGamma.Maximum = 100;
             this.trackBarGamma.Minimum = 1;
             this.trackBarGamma.Name = "trackBarGamma";
-            this.trackBarGamma.Size = new System.Drawing.Size(197, 45);
+            this.trackBarGamma.Size = new System.Drawing.Size(415, 45);
             this.trackBarGamma.TabIndex = 39;
             this.trackBarGamma.Value = 1;
             this.trackBarGamma.Scroll += new System.EventHandler(this.trackBarGamma_Scroll);
@@ -629,10 +621,8 @@ namespace Fotoszop
             // groupBox5
             // 
             this.groupBox5.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.groupBox5.Controls.Add(this.label9);
             this.groupBox5.Controls.Add(this.label7);
             this.groupBox5.Controls.Add(this.labelGamma);
-            this.groupBox5.Controls.Add(this.trackBarIncreaseContr);
             this.groupBox5.Controls.Add(this.trackBarGamma);
             this.groupBox5.Controls.Add(this.label8);
             this.groupBox5.Font = new System.Drawing.Font("MS Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -642,16 +632,6 @@ namespace Fotoszop
             this.groupBox5.TabIndex = 40;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Gamma";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("MS Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label9.Location = new System.Drawing.Point(354, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(98, 16);
-            this.label9.TabIndex = 41;
-            this.label9.Text = "Kontrast 2";
             // 
             // label7
             // 
@@ -667,7 +647,7 @@ namespace Fotoszop
             // 
             this.labelGamma.AutoSize = true;
             this.labelGamma.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelGamma.Location = new System.Drawing.Point(92, 60);
+            this.labelGamma.Location = new System.Drawing.Point(200, 60);
             this.labelGamma.Name = "labelGamma";
             this.labelGamma.Size = new System.Drawing.Size(15, 16);
             this.labelGamma.TabIndex = 42;
@@ -677,18 +657,71 @@ namespace Fotoszop
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label8.Location = new System.Drawing.Point(162, 60);
+            this.label8.Location = new System.Drawing.Point(392, 60);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(29, 16);
             this.label8.TabIndex = 42;
             this.label8.Text = "100";
+            // 
+            // panelRed
+            // 
+            this.panelRed.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panelRed.Location = new System.Drawing.Point(9, 19);
+            this.panelRed.Name = "panelRed";
+            this.panelRed.Size = new System.Drawing.Size(255, 107);
+            this.panelRed.TabIndex = 41;
+            this.panelRed.Paint += new System.Windows.Forms.PaintEventHandler(this.panelRed_Paint);
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.groupBox6.Controls.Add(this.panelGreen);
+            this.groupBox6.Controls.Add(this.panelBlue);
+            this.groupBox6.Controls.Add(this.panelRed);
+            this.groupBox6.Font = new System.Drawing.Font("MS Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.groupBox6.Location = new System.Drawing.Point(12, 679);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(801, 145);
+            this.groupBox6.TabIndex = 42;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Histogram";
+            // 
+            // panelGreen
+            // 
+            this.panelGreen.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panelGreen.Location = new System.Drawing.Point(271, 19);
+            this.panelGreen.Name = "panelGreen";
+            this.panelGreen.Size = new System.Drawing.Size(255, 107);
+            this.panelGreen.TabIndex = 42;
+            this.panelGreen.Paint += new System.Windows.Forms.PaintEventHandler(this.panelGreen_Paint);
+            // 
+            // panelBlue
+            // 
+            this.panelBlue.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panelBlue.Location = new System.Drawing.Point(533, 19);
+            this.panelBlue.Name = "panelBlue";
+            this.panelBlue.Size = new System.Drawing.Size(255, 107);
+            this.panelBlue.TabIndex = 43;
+            this.panelBlue.Paint += new System.Windows.Forms.PaintEventHandler(this.panelBlue_Paint);
+            // 
+            // buttonHistogram
+            // 
+            this.buttonHistogram.Location = new System.Drawing.Point(448, 534);
+            this.buttonHistogram.Name = "buttonHistogram";
+            this.buttonHistogram.Size = new System.Drawing.Size(75, 23);
+            this.buttonHistogram.TabIndex = 43;
+            this.buttonHistogram.Text = "Histogram";
+            this.buttonHistogram.UseVisualStyleBackColor = true;
+            this.buttonHistogram.Click += new System.EventHandler(this.buttonHistogram_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.ClientSize = new System.Drawing.Size(1292, 731);
+            this.ClientSize = new System.Drawing.Size(1292, 861);
+            this.Controls.Add(this.buttonHistogram);
+            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -701,7 +734,7 @@ namespace Fotoszop
             this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
-            this.MinimumSize = new System.Drawing.Size(1308, 770);
+            this.MinimumSize = new System.Drawing.Size(1308, 900);
             this.Name = "Form1";
             this.Text = "Fotoszop";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -719,10 +752,10 @@ namespace Fotoszop
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarIncreaseContr)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGamma)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -771,14 +804,17 @@ namespace Fotoszop
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button buttonSavePic1;
-        private System.Windows.Forms.TrackBar trackBarIncreaseContr;
         private System.Windows.Forms.TrackBar trackBarGamma;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Label labelGamma;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button buttonSavePic2;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Panel panelRed;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Panel panelBlue;
+        private System.Windows.Forms.Panel panelGreen;
+        private System.Windows.Forms.Button buttonHistogram;
     }
 }
 
