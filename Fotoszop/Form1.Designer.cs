@@ -79,9 +79,37 @@ namespace Fotoszop
             this.label8 = new System.Windows.Forms.Label();
             this.panelRed = new System.Windows.Forms.Panel();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.panelKulm = new System.Windows.Forms.Panel();
             this.panelGreen = new System.Windows.Forms.Panel();
             this.panelBlue = new System.Windows.Forms.Panel();
             this.buttonHistogram = new System.Windows.Forms.Button();
+            this.buttonMaska = new System.Windows.Forms.Button();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.numericUpDownMask9 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMask8 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMask7 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMask6 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMask5 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMask4 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMask3 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMask2 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMask1 = new System.Windows.Forms.NumericUpDown();
+            this.buttonWyrownajHist = new System.Windows.Forms.Button();
+            this.buttonFiltr = new System.Windows.Forms.Button();
+            this.buttonRobertsPion = new System.Windows.Forms.Button();
+            this.buttonRobertsPoz = new System.Windows.Forms.Button();
+            this.buttonPrewittPion = new System.Windows.Forms.Button();
+            this.buttonPrewittPoz = new System.Windows.Forms.Button();
+            this.buttonSobelPoz = new System.Windows.Forms.Button();
+            this.buttonSobelPion = new System.Windows.Forms.Button();
+            this.buttonLaPlace = new System.Windows.Forms.Button();
+            this.buttonMedian = new System.Windows.Forms.Button();
+            this.buttonMax = new System.Windows.Forms.Button();
+            this.buttonMin = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -97,6 +125,16 @@ namespace Fotoszop
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGamma)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMask9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMask8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMask7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMask6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMask5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMask4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMask3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMask2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMask1)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -329,9 +367,9 @@ namespace Fotoszop
             // 
             // buttonGrey
             // 
-            this.buttonGrey.Location = new System.Drawing.Point(448, 505);
+            this.buttonGrey.Location = new System.Drawing.Point(635, 10);
             this.buttonGrey.Name = "buttonGrey";
-            this.buttonGrey.Size = new System.Drawing.Size(75, 23);
+            this.buttonGrey.Size = new System.Drawing.Size(98, 31);
             this.buttonGrey.TabIndex = 18;
             this.buttonGrey.Text = "Szarość";
             this.buttonGrey.UseVisualStyleBackColor = true;
@@ -339,9 +377,9 @@ namespace Fotoszop
             // 
             // buttonInvert
             // 
-            this.buttonInvert.Location = new System.Drawing.Point(448, 476);
+            this.buttonInvert.Location = new System.Drawing.Point(221, 84);
             this.buttonInvert.Name = "buttonInvert";
-            this.buttonInvert.Size = new System.Drawing.Size(75, 23);
+            this.buttonInvert.Size = new System.Drawing.Size(98, 31);
             this.buttonInvert.TabIndex = 19;
             this.buttonInvert.Text = "Negatyw";
             this.buttonInvert.UseVisualStyleBackColor = true;
@@ -584,8 +622,8 @@ namespace Fotoszop
             // groupBox4
             // 
             this.groupBox4.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.groupBox4.Controls.Add(this.buttonOstry);
             this.groupBox4.Controls.Add(this.buttonSuma);
+            this.groupBox4.Controls.Add(this.buttonOstry);
             this.groupBox4.Controls.Add(this.buttonReflect);
             this.groupBox4.Controls.Add(this.buttonRoznica);
             this.groupBox4.Controls.Add(this.buttonRozcienczenie);
@@ -675,16 +713,30 @@ namespace Fotoszop
             // groupBox6
             // 
             this.groupBox6.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.groupBox6.Controls.Add(this.label12);
+            this.groupBox6.Controls.Add(this.label11);
+            this.groupBox6.Controls.Add(this.label10);
+            this.groupBox6.Controls.Add(this.label9);
+            this.groupBox6.Controls.Add(this.panelKulm);
             this.groupBox6.Controls.Add(this.panelGreen);
             this.groupBox6.Controls.Add(this.panelBlue);
             this.groupBox6.Controls.Add(this.panelRed);
             this.groupBox6.Font = new System.Drawing.Font("MS Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.groupBox6.Location = new System.Drawing.Point(12, 679);
+            this.groupBox6.Location = new System.Drawing.Point(12, 801);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(801, 145);
+            this.groupBox6.Size = new System.Drawing.Size(1063, 150);
             this.groupBox6.TabIndex = 42;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Histogram";
+            // 
+            // panelKulm
+            // 
+            this.panelKulm.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panelKulm.Location = new System.Drawing.Point(794, 19);
+            this.panelKulm.Name = "panelKulm";
+            this.panelKulm.Size = new System.Drawing.Size(255, 107);
+            this.panelKulm.TabIndex = 44;
+            this.panelKulm.Paint += new System.Windows.Forms.PaintEventHandler(this.panelKulm_Paint);
             // 
             // panelGreen
             // 
@@ -706,27 +758,385 @@ namespace Fotoszop
             // 
             // buttonHistogram
             // 
-            this.buttonHistogram.Location = new System.Drawing.Point(448, 534);
+            this.buttonHistogram.Location = new System.Drawing.Point(117, 10);
             this.buttonHistogram.Name = "buttonHistogram";
-            this.buttonHistogram.Size = new System.Drawing.Size(75, 23);
+            this.buttonHistogram.Size = new System.Drawing.Size(98, 31);
             this.buttonHistogram.TabIndex = 43;
             this.buttonHistogram.Text = "Histogram";
             this.buttonHistogram.UseVisualStyleBackColor = true;
             this.buttonHistogram.Click += new System.EventHandler(this.buttonHistogram_Click);
+            // 
+            // buttonMaska
+            // 
+            this.buttonMaska.Location = new System.Drawing.Point(3, 98);
+            this.buttonMaska.Name = "buttonMaska";
+            this.buttonMaska.Size = new System.Drawing.Size(108, 23);
+            this.buttonMaska.TabIndex = 44;
+            this.buttonMaska.Text = "Maska";
+            this.buttonMaska.UseVisualStyleBackColor = true;
+            this.buttonMaska.Click += new System.EventHandler(this.buttonMaska_Click);
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.groupBox7.Controls.Add(this.buttonMax);
+            this.groupBox7.Controls.Add(this.buttonMin);
+            this.groupBox7.Controls.Add(this.buttonMedian);
+            this.groupBox7.Controls.Add(this.buttonWyrownajHist);
+            this.groupBox7.Controls.Add(this.buttonFiltr);
+            this.groupBox7.Controls.Add(this.numericUpDownMask9);
+            this.groupBox7.Controls.Add(this.buttonSobelPoz);
+            this.groupBox7.Controls.Add(this.buttonPrewittPoz);
+            this.groupBox7.Controls.Add(this.buttonLaPlace);
+            this.groupBox7.Controls.Add(this.buttonPrewittPion);
+            this.groupBox7.Controls.Add(this.buttonHistogram);
+            this.groupBox7.Controls.Add(this.buttonMaska);
+            this.groupBox7.Controls.Add(this.numericUpDownMask8);
+            this.groupBox7.Controls.Add(this.numericUpDownMask7);
+            this.groupBox7.Controls.Add(this.buttonSobelPion);
+            this.groupBox7.Controls.Add(this.numericUpDownMask6);
+            this.groupBox7.Controls.Add(this.buttonInvert);
+            this.groupBox7.Controls.Add(this.numericUpDownMask5);
+            this.groupBox7.Controls.Add(this.buttonGrey);
+            this.groupBox7.Controls.Add(this.numericUpDownMask4);
+            this.groupBox7.Controls.Add(this.buttonRobertsPoz);
+            this.groupBox7.Controls.Add(this.buttonRobertsPion);
+            this.groupBox7.Controls.Add(this.numericUpDownMask3);
+            this.groupBox7.Controls.Add(this.numericUpDownMask2);
+            this.groupBox7.Controls.Add(this.numericUpDownMask1);
+            this.groupBox7.Font = new System.Drawing.Font("MS Reference Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.groupBox7.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.groupBox7.Location = new System.Drawing.Point(12, 665);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(1063, 130);
+            this.groupBox7.TabIndex = 45;
+            this.groupBox7.TabStop = false;
+            // 
+            // numericUpDownMask9
+            // 
+            this.numericUpDownMask9.Location = new System.Drawing.Point(80, 70);
+            this.numericUpDownMask9.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownMask9.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownMask9.Name = "numericUpDownMask9";
+            this.numericUpDownMask9.Size = new System.Drawing.Size(31, 22);
+            this.numericUpDownMask9.TabIndex = 8;
+            // 
+            // numericUpDownMask8
+            // 
+            this.numericUpDownMask8.Location = new System.Drawing.Point(43, 70);
+            this.numericUpDownMask8.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownMask8.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownMask8.Name = "numericUpDownMask8";
+            this.numericUpDownMask8.Size = new System.Drawing.Size(31, 22);
+            this.numericUpDownMask8.TabIndex = 7;
+            // 
+            // numericUpDownMask7
+            // 
+            this.numericUpDownMask7.Location = new System.Drawing.Point(6, 70);
+            this.numericUpDownMask7.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownMask7.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownMask7.Name = "numericUpDownMask7";
+            this.numericUpDownMask7.Size = new System.Drawing.Size(31, 22);
+            this.numericUpDownMask7.TabIndex = 6;
+            // 
+            // numericUpDownMask6
+            // 
+            this.numericUpDownMask6.Location = new System.Drawing.Point(80, 41);
+            this.numericUpDownMask6.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownMask6.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownMask6.Name = "numericUpDownMask6";
+            this.numericUpDownMask6.Size = new System.Drawing.Size(31, 22);
+            this.numericUpDownMask6.TabIndex = 5;
+            // 
+            // numericUpDownMask5
+            // 
+            this.numericUpDownMask5.Location = new System.Drawing.Point(43, 41);
+            this.numericUpDownMask5.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownMask5.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownMask5.Name = "numericUpDownMask5";
+            this.numericUpDownMask5.Size = new System.Drawing.Size(31, 22);
+            this.numericUpDownMask5.TabIndex = 4;
+            this.numericUpDownMask5.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // numericUpDownMask4
+            // 
+            this.numericUpDownMask4.Location = new System.Drawing.Point(6, 41);
+            this.numericUpDownMask4.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownMask4.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownMask4.Name = "numericUpDownMask4";
+            this.numericUpDownMask4.Size = new System.Drawing.Size(31, 22);
+            this.numericUpDownMask4.TabIndex = 3;
+            // 
+            // numericUpDownMask3
+            // 
+            this.numericUpDownMask3.Location = new System.Drawing.Point(80, 12);
+            this.numericUpDownMask3.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownMask3.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownMask3.Name = "numericUpDownMask3";
+            this.numericUpDownMask3.Size = new System.Drawing.Size(31, 22);
+            this.numericUpDownMask3.TabIndex = 2;
+            // 
+            // numericUpDownMask2
+            // 
+            this.numericUpDownMask2.Location = new System.Drawing.Point(43, 12);
+            this.numericUpDownMask2.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownMask2.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownMask2.Name = "numericUpDownMask2";
+            this.numericUpDownMask2.Size = new System.Drawing.Size(31, 22);
+            this.numericUpDownMask2.TabIndex = 1;
+            // 
+            // numericUpDownMask1
+            // 
+            this.numericUpDownMask1.Location = new System.Drawing.Point(6, 12);
+            this.numericUpDownMask1.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownMask1.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownMask1.Name = "numericUpDownMask1";
+            this.numericUpDownMask1.Size = new System.Drawing.Size(31, 22);
+            this.numericUpDownMask1.TabIndex = 0;
+            // 
+            // buttonWyrownajHist
+            // 
+            this.buttonWyrownajHist.Location = new System.Drawing.Point(117, 47);
+            this.buttonWyrownajHist.Name = "buttonWyrownajHist";
+            this.buttonWyrownajHist.Size = new System.Drawing.Size(98, 68);
+            this.buttonWyrownajHist.TabIndex = 46;
+            this.buttonWyrownajHist.Text = "Wyrównanie zdjęcie + histogram";
+            this.buttonWyrownajHist.UseVisualStyleBackColor = true;
+            this.buttonWyrownajHist.Click += new System.EventHandler(this.buttonWyrownajHist_Click);
+            // 
+            // buttonFiltr
+            // 
+            this.buttonFiltr.Location = new System.Drawing.Point(221, 47);
+            this.buttonFiltr.Name = "buttonFiltr";
+            this.buttonFiltr.Size = new System.Drawing.Size(98, 31);
+            this.buttonFiltr.TabIndex = 46;
+            this.buttonFiltr.Text = "Rozmyj";
+            this.buttonFiltr.UseVisualStyleBackColor = true;
+            this.buttonFiltr.Click += new System.EventHandler(this.buttonFiltr_Click);
+            // 
+            // buttonRobertsPion
+            // 
+            this.buttonRobertsPion.Location = new System.Drawing.Point(323, 10);
+            this.buttonRobertsPion.Name = "buttonRobertsPion";
+            this.buttonRobertsPion.Size = new System.Drawing.Size(98, 31);
+            this.buttonRobertsPion.TabIndex = 47;
+            this.buttonRobertsPion.Text = "Roberts Pion";
+            this.buttonRobertsPion.UseVisualStyleBackColor = true;
+            this.buttonRobertsPion.Click += new System.EventHandler(this.buttonRobertsPion_Click);
+            // 
+            // buttonRobertsPoz
+            // 
+            this.buttonRobertsPoz.Location = new System.Drawing.Point(323, 47);
+            this.buttonRobertsPoz.Name = "buttonRobertsPoz";
+            this.buttonRobertsPoz.Size = new System.Drawing.Size(98, 31);
+            this.buttonRobertsPoz.TabIndex = 48;
+            this.buttonRobertsPoz.Text = "Roberts Poz";
+            this.buttonRobertsPoz.UseVisualStyleBackColor = true;
+            this.buttonRobertsPoz.Click += new System.EventHandler(this.buttonRobertsPoz_Click);
+            // 
+            // buttonPrewittPion
+            // 
+            this.buttonPrewittPion.Location = new System.Drawing.Point(531, 10);
+            this.buttonPrewittPion.Name = "buttonPrewittPion";
+            this.buttonPrewittPion.Size = new System.Drawing.Size(98, 31);
+            this.buttonPrewittPion.TabIndex = 49;
+            this.buttonPrewittPion.Text = "Prewitt Pion";
+            this.buttonPrewittPion.UseVisualStyleBackColor = true;
+            this.buttonPrewittPion.Click += new System.EventHandler(this.buttonPrewittPion_Click);
+            // 
+            // buttonPrewittPoz
+            // 
+            this.buttonPrewittPoz.Location = new System.Drawing.Point(531, 47);
+            this.buttonPrewittPoz.Name = "buttonPrewittPoz";
+            this.buttonPrewittPoz.Size = new System.Drawing.Size(98, 31);
+            this.buttonPrewittPoz.TabIndex = 50;
+            this.buttonPrewittPoz.Text = "Prewitt Poz";
+            this.buttonPrewittPoz.UseVisualStyleBackColor = true;
+            this.buttonPrewittPoz.Click += new System.EventHandler(this.buttonPrewittPoz_Click);
+            // 
+            // buttonSobelPoz
+            // 
+            this.buttonSobelPoz.Location = new System.Drawing.Point(427, 47);
+            this.buttonSobelPoz.Name = "buttonSobelPoz";
+            this.buttonSobelPoz.Size = new System.Drawing.Size(98, 31);
+            this.buttonSobelPoz.TabIndex = 52;
+            this.buttonSobelPoz.Text = "Sobel Poz";
+            this.buttonSobelPoz.UseVisualStyleBackColor = true;
+            this.buttonSobelPoz.Click += new System.EventHandler(this.buttonSobelPoz_Click);
+            // 
+            // buttonSobelPion
+            // 
+            this.buttonSobelPion.Location = new System.Drawing.Point(427, 10);
+            this.buttonSobelPion.Name = "buttonSobelPion";
+            this.buttonSobelPion.Size = new System.Drawing.Size(98, 31);
+            this.buttonSobelPion.TabIndex = 51;
+            this.buttonSobelPion.Text = "Sobel Pion";
+            this.buttonSobelPion.UseVisualStyleBackColor = true;
+            this.buttonSobelPion.Click += new System.EventHandler(this.buttonSobelPion_Click);
+            // 
+            // buttonLaPlace
+            // 
+            this.buttonLaPlace.Location = new System.Drawing.Point(221, 10);
+            this.buttonLaPlace.Name = "buttonLaPlace";
+            this.buttonLaPlace.Size = new System.Drawing.Size(98, 31);
+            this.buttonLaPlace.TabIndex = 53;
+            this.buttonLaPlace.Text = "Laplace";
+            this.buttonLaPlace.UseVisualStyleBackColor = true;
+            this.buttonLaPlace.Click += new System.EventHandler(this.buttonLaPlace_Click);
+            // 
+            // buttonMedian
+            // 
+            this.buttonMedian.Location = new System.Drawing.Point(531, 84);
+            this.buttonMedian.Name = "buttonMedian";
+            this.buttonMedian.Size = new System.Drawing.Size(98, 31);
+            this.buttonMedian.TabIndex = 54;
+            this.buttonMedian.Text = "Mediana";
+            this.buttonMedian.UseVisualStyleBackColor = true;
+            this.buttonMedian.Click += new System.EventHandler(this.buttonMedian_Click);
+            // 
+            // buttonMax
+            // 
+            this.buttonMax.Location = new System.Drawing.Point(427, 84);
+            this.buttonMax.Name = "buttonMax";
+            this.buttonMax.Size = new System.Drawing.Size(98, 31);
+            this.buttonMax.TabIndex = 55;
+            this.buttonMax.Text = "MAX";
+            this.buttonMax.UseVisualStyleBackColor = true;
+            this.buttonMax.Click += new System.EventHandler(this.buttonMax_Click);
+            // 
+            // buttonMin
+            // 
+            this.buttonMin.Location = new System.Drawing.Point(323, 84);
+            this.buttonMin.Name = "buttonMin";
+            this.buttonMin.Size = new System.Drawing.Size(98, 31);
+            this.buttonMin.TabIndex = 56;
+            this.buttonMin.Text = "MIN";
+            this.buttonMin.UseVisualStyleBackColor = true;
+            this.buttonMin.Click += new System.EventHandler(this.buttonMin_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(126, 126);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(17, 16);
+            this.label9.TabIndex = 45;
+            this.label9.Text = "R";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(392, 126);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(17, 16);
+            this.label10.TabIndex = 46;
+            this.label10.Text = "G";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(661, 126);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(17, 16);
+            this.label11.TabIndex = 47;
+            this.label11.Text = "B";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(870, 126);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(107, 16);
+            this.label12.TabIndex = 48;
+            this.label12.Text = "Kumulacyjny";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.ClientSize = new System.Drawing.Size(1292, 861);
-            this.Controls.Add(this.buttonHistogram);
+            this.ClientSize = new System.Drawing.Size(1292, 946);
+            this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.buttonInvert);
-            this.Controls.Add(this.buttonGrey);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
@@ -756,6 +1166,17 @@ namespace Fotoszop
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMask9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMask8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMask7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMask6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMask5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMask4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMask3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMask2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMask1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -815,6 +1236,34 @@ namespace Fotoszop
         private System.Windows.Forms.Panel panelBlue;
         private System.Windows.Forms.Panel panelGreen;
         private System.Windows.Forms.Button buttonHistogram;
+        private System.Windows.Forms.Panel panelKulm;
+        private System.Windows.Forms.Button buttonMaska;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.NumericUpDown numericUpDownMask9;
+        private System.Windows.Forms.NumericUpDown numericUpDownMask8;
+        private System.Windows.Forms.NumericUpDown numericUpDownMask7;
+        private System.Windows.Forms.NumericUpDown numericUpDownMask6;
+        private System.Windows.Forms.NumericUpDown numericUpDownMask5;
+        private System.Windows.Forms.NumericUpDown numericUpDownMask4;
+        private System.Windows.Forms.NumericUpDown numericUpDownMask3;
+        private System.Windows.Forms.NumericUpDown numericUpDownMask2;
+        private System.Windows.Forms.NumericUpDown numericUpDownMask1;
+        private System.Windows.Forms.Button buttonWyrownajHist;
+        private System.Windows.Forms.Button buttonFiltr;
+        private System.Windows.Forms.Button buttonRobertsPion;
+        private System.Windows.Forms.Button buttonRobertsPoz;
+        private System.Windows.Forms.Button buttonPrewittPion;
+        private System.Windows.Forms.Button buttonPrewittPoz;
+        private System.Windows.Forms.Button buttonSobelPoz;
+        private System.Windows.Forms.Button buttonSobelPion;
+        private System.Windows.Forms.Button buttonLaPlace;
+        private System.Windows.Forms.Button buttonMedian;
+        private System.Windows.Forms.Button buttonMax;
+        private System.Windows.Forms.Button buttonMin;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
     }
 }
 

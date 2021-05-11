@@ -18,15 +18,25 @@ namespace Fotoszop
         Bitmap newBitmap2;
         Bitmap newBitmap3;
         Bitmap newBitmap4;
+        Bitmap bitmapWyr;
         float contrast = 1;
         float gamma = 1;
         Boolean czyJestZdjecie1 = false;
         Boolean czyJestZdjecie2 = false;
         Boolean czyJestZdjecie3 = false;
         Boolean robHistogram = false;
+        Boolean wyrownanieHistogramu = false;
         int[] tabRed = new int[256];
         int[] tabGreen = new int[256];
         int[] tabBlue = new int[256];
+        int[] newRed = new int[256];
+        int[] newGreen = new int[256];
+        int[] newBlue = new int[256];
+        int[] histCaly = new int[256];
+        int[] histKum = new int[256];
+        int[] histKumRed = new int[256];
+        int[] histKumGreen = new int[256];
+        int[] histKumBlue = new int[256];
 
 
 
@@ -1310,29 +1320,40 @@ namespace Fotoszop
 
         private void Histogram()
         {
-            Array.Clear(tabRed, 0, tabRed.Length);
-            Array.Clear(tabGreen, 0, tabRed.Length);
-            Array.Clear(tabBlue, 0, tabRed.Length);
-
-            Color picColor;
-
-            Pen red = new Pen(Color.Red);
-
-            for (int x = 0; x < newBitmap1.Width; x++)
+            if(czyJestZdjecie1)
             {
-                for (int y = 0; y < newBitmap1.Height; y++)
+                Array.Clear(tabRed, 0, tabRed.Length);
+                Array.Clear(tabGreen, 0, tabRed.Length);
+                Array.Clear(tabBlue, 0, tabRed.Length);
+
+                Color picColor;
+
+                Pen red = new Pen(Color.Red);
+
+                for (int x = 0; x < newBitmap1.Width; x++)
                 {
-                    picColor = newBitmap1.GetPixel(x, y);
-                    tabRed[picColor.R]++;
-                    tabGreen[picColor.G]++;
-                    tabBlue[picColor.B]++;                                                                
+                    for (int y = 0; y < newBitmap1.Height; y++)
+                    {
+                        picColor = newBitmap1.GetPixel(x, y);
+                        tabRed[picColor.R]++;
+                        tabGreen[picColor.G]++;
+                        tabBlue[picColor.B]++;
+                    }
                 }
-            }         
+                for (int i = 0; i < 256; i++)
+                {
+                    histCaly[i] = tabRed[i] + tabGreen[i] + tabBlue[i];
+                }
+            }
+            else
+            {
+                MessageBox.Show("Nie załadowałeś zdjęcia", "BŁĄD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }        
         }
 
         private void panelRed_Paint(object sender, PaintEventArgs e)
         {
-            if(czyJestZdjecie1)
+            if (czyJestZdjecie1 && robHistogram)
             {
                 Graphics g = e.Graphics;
                 int width = panelRed.Width;
@@ -1345,15 +1366,16 @@ namespace Fotoszop
                     r = r * 4000;
                     g.DrawLine(new Pen(Color.Red), i, height, i, height - (int)r);
                 }
-            }                                    
+            }          
         }
 
         private void buttonHistogram_Click(object sender, EventArgs e)
         {
+            robHistogram = true;
             Histogram();
             panelRed.Invalidate();
             panelGreen.Invalidate();
-            panelBlue.Invalidate();
+            panelBlue.Invalidate();                    
         }
 
         private void panelGreen_Paint(object sender, PaintEventArgs e)
@@ -1390,6 +1412,754 @@ namespace Fotoszop
                     g.DrawLine(new Pen(Color.Blue), i, height, i, height - (int)b);
                 }
             }
+        }
+
+        private void buttonMaska_Click(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+
+            int[,] maska = new int[3, 3];
+
+            maska[0, 0] = (int)numericUpDownMask1.Value;
+            maska[0, 1] = (int)numericUpDownMask2.Value;
+            maska[0, 2] = (int)numericUpDownMask3.Value;
+
+            maska[1, 0] = (int)numericUpDownMask4.Value;
+            maska[1, 1] = (int)numericUpDownMask5.Value;
+            maska[1, 2] = (int)numericUpDownMask6.Value;
+
+            maska[2, 0] = (int)numericUpDownMask7.Value;
+            maska[2, 1] = (int)numericUpDownMask8.Value;
+            maska[2, 2] = (int)numericUpDownMask9.Value;
+
+            int norm = 0;
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    norm += maska[i, j];
+                }
+            }
+
+            Color k;
+
+            int R, G, B;
+
+            for (int x = 1; x < newBitmap1.Width - 1; x++)
+            {
+                for (int y = 1; y < newBitmap1.Height - 1; y++)
+                {
+                    R = G = B = 0;
+                    for (int i = 0; i < 3; i++)
+                    {
+                        for (int j = 0; j < 3; j++)
+                        {
+                            k = b1.GetPixel(x + i - 1, y + j - 1);
+                            R += k.R * maska[i, j];
+                            G += k.G * maska[i, j];
+                            B += k.B * maska[i, j];
+                        }
+                    }
+                    if (norm != 0)
+                    {
+                        R /= norm;
+                        G /= norm;
+                        B /= norm;
+                    }
+
+                    if (R < 0)
+                        R = 0;
+                    if (R > 255)
+                        R = 255;
+
+                    if (G < 0)
+                        G = 0;
+                    if (G > 255)
+                        G = 255;
+
+                    if (B < 0)
+                        B = 0;
+                    if (B > 255)
+                        B = 255;
+
+                    b1.SetPixel(x, y, Color.FromArgb(R, G, B));
+
+                }
+            }
+
+            pictureBox1.Invalidate();
+            Cursor = Cursors.Default;
+        }
+
+        private void buttonWyrownajHist_Click(object sender, EventArgs e)
+        {
+            if(robHistogram)
+            {
+                wyrownanieHistogramu = true;
+                histogramKum();
+                panelKulm.Invalidate();
+                Array.Clear(tabRed, 0, tabRed.Length);
+                Array.Clear(tabGreen, 0, tabGreen.Length);
+                Array.Clear(tabBlue, 0, tabBlue.Length);
+                wyrownajRed();
+                wyrownajGreen();
+                wyrownajBlue();
+                panelRed.Invalidate();
+                panelGreen.Invalidate();
+                panelBlue.Invalidate();
+            }
+            else
+            {
+                MessageBox.Show("Nie załadowałeś histogramu", "BŁĄD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }       
+        }
+        private void histogramKum()
+        {
+            histKum[0] = histCaly[0];
+            for (int i = 1; i < histCaly.Length; i++)
+            {
+                histKum[i] = histCaly[i] + histKum[i - 1];
+            }
+            histKumRed[0] = tabRed[0];
+            for (int i = 1; i < tabRed.Length; i++)
+            {
+                newRed[i] = tabRed[i] + newRed[i - 1];
+            }
+            histKumGreen[0] = tabGreen[0];
+            for (int i = 1; i < tabGreen.Length; i++)
+            {
+                newGreen[i] = tabGreen[i] + newGreen[i - 1];
+            }
+            histKumBlue[0] = tabBlue[0];
+            for (int i = 1; i < tabBlue.Length; i++)
+            {
+                newBlue[i] = tabBlue[i] + newBlue[i - 1];
+            }
+            wyrownajZdjecie();
+
+        }
+        private void wyrownajZdjecie()
+        {
+            double temp = 255 / (double)(newBitmap1.Width * newBitmap1.Height);       
+            for (int x = 0; x < newBitmap1.Width; x++)
+            {
+                for (int y = 0; y < newBitmap1.Height; y++)
+                {
+
+                    Color k = newBitmap1.GetPixel(x, y);
+
+                    int r = k.R;
+                    int g = k.G;
+                    int b = k.B;
+
+                    double r1 = newRed[r] * 255;
+                    double g1 = newGreen[g] * 255;
+                    double b1 = newBlue[b] * 255;
+                    double r2 = r1 / (newBitmap1.Width * newBitmap1.Height);
+                    double g2 = g1 / (newBitmap1.Width * newBitmap1.Height);
+                    double b2 = b1 / (newBitmap1.Width * newBitmap1.Height);
+
+                    if (r2 > 255)
+                    {
+                        r2 = 255;
+                    }
+                    if (g2 > 255)
+                    {
+                        g2 = 255;
+                    }
+                    if (b2 > 255)
+                    {
+                        b2 = 255;
+                    }
+                    newBitmap1.SetPixel(x, y, Color.FromArgb((int)r2, (int)g2, (int)b2));
+                }
+            }
+            pictureBox1.Image = newBitmap1;
+        }
+        private void wyrownajGreen()
+        {
+            Color k;
+            double d = 0;
+            double sum = 0;
+            Array.Clear(newGreen, 0, newRed.Length);
+            for (int x = 0; x < newBitmap1.Width; x++)
+            {
+                for (int y = 0; y < newBitmap1.Height; y++)
+                {
+                    k = newBitmap1.GetPixel(x, y);
+                    tabGreen[k.G]++;
+                }
+            }
+            for (int i = 0; i < 256; i++)
+            {
+                if (newGreen[i] != 0)
+                {
+                    d = tabGreen[i];
+                }
+            }
+            for (int i = 0; i < 256; i++)
+            {
+                sum += tabGreen[i];
+                newGreen[i] = (int)(((sum - d) / ((newBitmap1.Width * newBitmap1.Height) - d)) * 255);
+            }
+        }
+        private void wyrownajBlue()
+        {
+            Color k;
+            double d = 0;
+            double sum = 0;
+            Array.Clear(newBlue, 0, newBlue.Length);
+            for (int x = 0; x < newBitmap1.Width; x++)
+            {
+                for (int y = 0; y < newBitmap1.Height; y++)
+                {
+                    k = newBitmap1.GetPixel(x, y);
+                    tabBlue[k.B]++;
+                }
+            }
+            for (int i = 0; i < 256; i++)
+            {
+                if (newBlue[i] != 0)
+                {
+                    d = tabBlue[i];
+                }
+            }
+            for (int i = 0; i < 256; i++)
+            {
+                sum += tabBlue[i];
+                newBlue[i] = (int)(((sum - d) / ((newBitmap1.Width * newBitmap1.Height) - d)) * 255);
+            }
+        }
+        private void wyrownajRed()
+        {
+            Color k;
+            double d = 0;
+            double sum = 0;
+            Array.Clear(newRed, 0, newRed.Length);
+            for (int x = 0; x < newBitmap1.Width; x++)
+            {
+                for (int y = 0; y < newBitmap1.Height; y++)
+                {
+                    k = newBitmap1.GetPixel(x, y);
+                    tabRed[k.R]++;
+                }
+            }
+            for (int i = 0; i < 256; i++)
+            {
+                if (newRed[i] != 0)
+                {
+                    d = tabRed[i];
+                }
+            }
+            for (int i = 0; i < 256; i++)
+            {
+                sum += tabRed[i];
+                newRed[i] = (int)(((sum - d) / ((newBitmap1.Width * newBitmap1.Height) - d)) * 255);
+            }
+        }
+
+        private void panelKulm_Paint(object sender, PaintEventArgs e)
+        {
+            if(wyrownanieHistogramu)
+            {
+                int x = 0;
+                Graphics g = e.Graphics;
+                for (int i = 0; i < 256; i++)
+                {
+                    double b = histCaly[i];
+                    b = b / (newBitmap1.Width * newBitmap1.Height);
+                    b = b * 2200;
+                    g.DrawLine(new Pen(Color.Black), x, panelKulm.Height, x, panelKulm.Height - (int)b);
+                    x++;
+                }              
+            }         
+        }
+
+        private void buttonFiltr_Click(object sender, EventArgs e)
+        {
+            if(czyJestZdjecie1)
+            {
+                Rozmyj();
+            }
+            else
+            {
+                MessageBox.Show("Nie załadowałeś zdjęcia", "BŁĄD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
+        }
+        private void Rozmyj()
+        {
+            double[,] M = new double[,] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
+            Bitmap bitmapRozmyta;
+            bitmapRozmyta = (Bitmap)newBitmap1.Clone();
+            double r1 = 0;
+            double g1 = 0;
+            double b1 = 0;
+
+            for (int x = 0; x < newBitmap1.Width; x++)
+            {
+                for (int y = 0; y < newBitmap1.Height; y++)
+                {
+                    r1 = 0;
+                    g1 = 0;
+                    b1 = 0;
+                    for (int k = -1; k <= 1; k++)
+                    {
+                        for (int l = -1; l <= 1; l++)
+                        {
+                            int y1 = y + k;
+                            int x1 = x + l;
+                            
+                            if (y1 < 0)
+                                y1 = 0;
+
+                            if (y1 >= newBitmap1.Height)
+                                y1 = newBitmap1.Height - 1;
+                            
+                            if (x1 < 0)
+                                x1 = 0;
+                           
+                            if (x1 >= newBitmap1.Width)
+                                x1 = newBitmap1.Width - 1;
+                            
+                            Color p = bitmapRozmyta.GetPixel(x1, y1);
+                            double r2 = (double)p.R;
+                            double g2 = (double)p.G;
+                            double b2 = (double)p.B;
+                            r1 += r2 * M[k + 1, l + 1];
+                            g1 += g2 * M[k + 1, l + 1];
+                            b1 += b2 * M[k + 1, l + 1];
+                        }
+                    }
+
+                    double r3 = r1 / 9;
+                    double g3 = g1 / 9;
+                    double b3 = b1 / 9;
+
+                    if (r3 > 255)
+                    {
+                        r3 = 255;
+                    }
+                    if (g3 > 255)
+                    {
+                        g3 = 255;
+                    }
+                    if (b3 > 255)
+                    {
+                        b3 = 255;
+                    }
+
+                    newBitmap1.SetPixel(x, y, Color.FromArgb((int)r3, (int)g3, (int)b3));
+                }
+            }
+            pictureBox1.Image = newBitmap1;
+
+        }
+
+        private void buttonRobertsPion_Click(object sender, EventArgs e)
+        {
+            if (czyJestZdjecie1)
+            {
+                int[,] maska = new int[3, 3];
+                Array.Clear(maska, 0, maska.Length);
+
+                maska[0, 0] = 0;
+                maska[0, 1] = 0;
+                maska[0, 2] = 0;
+
+                maska[1, 0] = 0;
+                maska[1, 1] = 1;
+                maska[1, 2] = -1;
+
+                maska[2, 0] = 0;
+                maska[2, 1] = 0;
+                maska[2, 2] = 0;
+
+                wykonajFiltr(maska);
+            }
+            else
+            {
+                MessageBox.Show("Nie załadowałeś zdjęcia", "BŁĄD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private void wykonajFiltr(int [,] maska)
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            int norm = 0;
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    norm += maska[i, j];
+                }
+            }
+            Color k;
+            int R, G, B;
+
+            for (int x = 1; x < newBitmap1.Width - 1; x++)
+            {
+                for (int y = 1; y < newBitmap1.Height - 1; y++)
+                {
+                    R = G = B = 0;
+                    for (int i = 0; i < 3; i++)
+                    {
+                        for (int j = 0; j < 3; j++)
+                        {
+                            k = newBitmap1.GetPixel(x + i - 1, y + j - 1);
+                            R += k.R * maska[i, j];
+                            G += k.G * maska[i, j];
+                            B += k.B * maska[i, j];
+                        }
+                    }
+                    if (norm != 0)
+                    {
+                        R /= norm;
+                        G /= norm;
+                        B /= norm;
+                    }
+
+                    if (R < 0)
+                        R = 0;
+                    if (R > 255)
+                        R = 255;
+
+                    if (G < 0)
+                        G = 0;
+                    if (G > 255)
+                        G = 255;
+
+                    if (B < 0)
+                        B = 0;
+                    if (B > 255)
+                        B = 255;
+
+                    b1.SetPixel(x, y, Color.FromArgb(R, G, B));
+
+                }
+            }
+            pictureBox1.Image = b1;
+
+            pictureBox1.Invalidate();
+            Cursor = Cursors.Default;
+
+        }
+
+        private void buttonRobertsPoz_Click(object sender, EventArgs e)
+        {
+            if (czyJestZdjecie1)
+            {
+                int[,] maska = new int[3, 3];
+                Array.Clear(maska, 0, maska.Length);
+
+                maska[0, 0] = 0;
+                maska[0, 1] = 0;
+                maska[0, 2] = 0;
+
+                maska[1, 0] = 0;
+                maska[1, 1] = 1;
+                maska[1, 2] = 0;
+
+                maska[2, 0] = 0;
+                maska[2, 1] = -1;
+                maska[2, 2] = 0;
+
+                wykonajFiltr(maska);
+            }
+            else
+            {
+                MessageBox.Show("Nie załadowałeś zdjęcia", "BŁĄD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonPrewittPion_Click(object sender, EventArgs e)
+        {
+            if (czyJestZdjecie1)
+            {
+                int[,] maska = new int[3, 3];
+                Array.Clear(maska, 0, maska.Length);
+
+                maska[0, 0] = 1;
+                maska[0, 1] = 1;
+                maska[0, 2] = 1;
+
+                maska[1, 0] = 0;
+                maska[1, 1] = 0;
+                maska[1, 2] = 0;
+
+                maska[2, 0] = -1;
+                maska[2, 1] = -1;
+                maska[2, 2] = -1;
+
+                wykonajFiltr(maska);
+            }
+            else
+            {
+                MessageBox.Show("Nie załadowałeś zdjęcia", "BŁĄD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonPrewittPoz_Click(object sender, EventArgs e)
+        {
+            if (czyJestZdjecie1)
+            {
+                int[,] maska = new int[3, 3];
+                Array.Clear(maska, 0, maska.Length);
+
+                maska[0, 0] = 1;
+                maska[0, 1] = 0;
+                maska[0, 2] = -1;
+
+                maska[1, 0] = 1;
+                maska[1, 1] = 0;
+                maska[1, 2] = -1;
+
+                maska[2, 0] = 1;
+                maska[2, 1] = 0;
+                maska[2, 2] = -1;
+
+                wykonajFiltr(maska);
+            }
+            else
+            {
+                MessageBox.Show("Nie załadowałeś zdjęcia", "BŁĄD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonSobelPion_Click(object sender, EventArgs e)
+        {
+            if (czyJestZdjecie1)
+            {
+                int[,] maska = new int[3, 3];
+                Array.Clear(maska, 0, maska.Length);
+
+                maska[0, 0] = 1;
+                maska[0, 1] = 2;
+                maska[0, 2] = 1;
+
+                maska[1, 0] = 0;
+                maska[1, 1] = 0;
+                maska[1, 2] = 0;
+
+                maska[2, 0] = -1;
+                maska[2, 1] = -2;
+                maska[2, 2] = -1;
+
+                wykonajFiltr(maska);
+            }
+            else
+            {
+                MessageBox.Show("Nie załadowałeś zdjęcia", "BŁĄD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonSobelPoz_Click(object sender, EventArgs e)
+        {
+            if (czyJestZdjecie1)
+            {
+                int[,] maska = new int[3, 3];
+                Array.Clear(maska, 0, maska.Length);
+
+                maska[0, 0] = 1;
+                maska[0, 1] = 0;
+                maska[0, 2] = -1;
+
+                maska[1, 0] = 2;
+                maska[1, 1] = 0;
+                maska[1, 2] = -2;
+
+                maska[2, 0] = 1;
+                maska[2, 1] = 0;
+                maska[2, 2] = -1;
+
+                wykonajFiltr(maska);
+            }
+            else
+            {
+                MessageBox.Show("Nie załadowałeś zdjęcia", "BŁĄD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonLaPlace_Click(object sender, EventArgs e)
+        {
+            if (czyJestZdjecie1)
+            {
+                int[,] maska = new int[3, 3];
+                Array.Clear(maska, 0, maska.Length);
+
+                maska[0, 0] = 0;
+                maska[0, 1] = -1;
+                maska[0, 2] = 0;
+
+                maska[1, 0] = -1;
+                maska[1, 1] = 4;
+                maska[1, 2] = -1;
+
+                maska[2, 0] = 0;
+                maska[2, 1] = -1;
+                maska[2, 2] = 0;
+
+                wykonajFiltr(maska);
+            }
+            else
+            {
+                MessageBox.Show("Nie załadowałeś zdjęcia", "BŁĄD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonMin_Click(object sender, EventArgs e)
+        {
+            if(czyJestZdjecie1)
+                filtrMin();
+            else           
+                MessageBox.Show("Nie załadowałeś zdjęcia", "BŁĄD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+        }
+
+        private void filtrMin()
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Color kol;
+
+            for (int x = 1; x < newBitmap1.Width - 1; x++)
+            {
+                for (int y = 1; y < newBitmap1.Height - 1; y++)
+                {
+                    List<int> r = new List<int>();
+                    List<int> g = new List<int>();
+                    List<int> b = new List<int>();
+                    for (int i = x - 1; i < x + 1; i++)
+                    {
+                        for (int j = y - 1; j < y + 1; j++)
+                        {
+                            kol = newBitmap1.GetPixel(i, j);
+                            r.Add(kol.R);
+                            g.Add(kol.G);
+                            b.Add(kol.B);
+                        }
+                    }
+                    r.Sort();
+                    g.Sort();
+                    b.Sort();
+                    b1.SetPixel(x, y, Color.FromArgb(r[0], g[0], b[0]));
+                }
+            }
+            pictureBox1.Image = b1;
+        }
+
+
+        private void filtrMax()
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Color kol;
+
+            for (int x = 1; x < newBitmap1.Width - 1; x++)
+            {
+                for (int y = 1; y < newBitmap1.Height - 1; y++)
+                {
+                    List<int> r = new List<int>();
+                    List<int> g = new List<int>();
+                    List<int> b = new List<int>();
+                    for (int i = x - 1; i < x + 1; i++)
+                    {
+                        for (int j = y - 1; j < y + 1; j++)
+                        {
+                            kol = newBitmap1.GetPixel(i, j);
+                            r.Add(kol.R);
+                            g.Add(kol.G);
+                            b.Add(kol.B);                          
+                        }
+                    }
+                    r.Sort();
+                    g.Sort();
+                    b.Sort();
+                    r.Reverse();
+                    g.Reverse();
+                    b.Reverse();
+                    b1.SetPixel(x, y, Color.FromArgb(r[0], g[0], b[0]));
+                }
+            }
+            pictureBox1.Image = b1;
+        }
+
+        private void buttonMax_Click(object sender, EventArgs e)
+        {
+            if(czyJestZdjecie1)
+                filtrMax();
+            else
+                MessageBox.Show("Nie załadowałeś zdjęcia", "BŁĄD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+        }
+
+        private void buttonMedian_Click(object sender, EventArgs e)
+        {
+            if(czyJestZdjecie1)
+                filtrMedian();
+            else            
+                MessageBox.Show("Nie załadowałeś zdjęcia", "BŁĄD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void filtrMedian()
+        {
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Color kol;
+
+            for (int x = 1; x < newBitmap1.Width - 1; x++)
+            {
+                for (int y = 1; y < newBitmap1.Height - 1; y++)
+                {
+                    List<int> r = new List<int>();
+                    List<int> g = new List<int>();
+                    List<int> b = new List<int>();
+                    for (int i = x - 1; i < x + 1; i++)
+                    {
+                        for (int j = y - 1; j < y + 1; j++)
+                        {
+                            kol = newBitmap1.GetPixel(i, j);
+                            r.Add(kol.R);
+                            g.Add(kol.G);
+                            b.Add(kol.B);
+                        }
+                    }
+                    int medR = Mediana(r);
+                    int medG = Mediana(g);
+                    int medB = Mediana(b);
+
+                    if (medR > 255)
+                        medR = 255;
+
+                    if (medG > 255)
+                        medG = 255;
+
+                    if (medB > 255)
+                        medB = 255;
+
+
+
+
+                    b1.SetPixel(x, y, Color.FromArgb(medR, medG, medB));
+                }
+            }
+            pictureBox1.Image = b1;
+        }
+
+        private int Mediana(List<int> lista)
+        {
+            int rozmiar = lista.Count();
+            int polowa = lista.Count() / 2;
+            int tmp = polowa - 1;
+
+            var posortowanaLista = lista.OrderBy(n => n);
+            double median;
+
+            if ((rozmiar % 2) == 0)
+                median = posortowanaLista.ElementAt(polowa) + (posortowanaLista.ElementAt(tmp) / 2);
+            else
+                median = posortowanaLista.ElementAt(polowa);
+            return (int)median;
         }
     }
     
